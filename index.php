@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+require 'conexao.php';
+?>
 <!doctype html>
 <html lang="pt-BR">
   <head>
@@ -10,12 +13,13 @@
   <body>
     <?php include('navbar.php'); ?>
     <div class= "container mt-4">
+        <?php include('mensagem.php');?>
         <div class = "row">
             <div class="col-md-12">
                 <div calss="card">
                     <div class="card-header">
                         <h4>Lista de Usuários
-                            <a href="usuario-create.php" class="btn btn-primary float-end"> Adicionar Usuário </a>
+                            <a href="usuario_create.php" class="btn btn-primary float-end"> Adicionar Usuário </a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -30,19 +34,32 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php
+                            $sql = 'SELECT * FROM usuario';
+                            $usuario = mysqli_query($conexao, $sql);
+                            if (mysqli_num_rows($usuario) > 0){
+                                foreach($usuario as $usuario){
+                            ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>Lucas</td>
-                                    <td>21</td>
-                                    <td>lucasmathews@gmail.com</td>
+                                    <td><?=$usuario['id']?></td>
+                                    <td><?=$usuario['nome'] ?></td>
+                                    <td><?= $usuario['idade'] ?></td>
+                                    <td><?=$usuario['email']?></td>
                                     <td>
                                         <a href="" class="btn btn-success">Editar</a>
-                                        <a href="" class="btn btn-secondary">Visualizar</a>
+                                        <a href="usuario_view.php?id=<?=$usuario['id']?>" class="btn btn-secondary">Visualizar</a>
                                         <form action="" method="POST" class="d-inline">
                                             <button type="submit" name="delete_usuario" value="1" class="btn btn-danger btn-sm">Excluir</button>
                                         </form>
                                     </td>
                                 </tr>
+                                <?php
+                                }
+                                }
+                                else{
+                                    echo '<h5>Nehum usuário encontrado</h5>';
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
