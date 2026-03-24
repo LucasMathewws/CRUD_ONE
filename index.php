@@ -9,7 +9,8 @@ require 'conexao.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Meu Primeiro CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
   <body>
     <?php include('navbar.php'); ?>
     <div class= "container mt-4">
@@ -46,10 +47,10 @@ require 'conexao.php';
                                     <td><?= $usuario['idade'] ?></td>
                                     <td><?=$usuario['email']?></td>
                                     <td>
-                                        <a href="" class="btn btn-success">Editar</a>
+                                        <a href="editar_usuario.php?id=<?= $usuario['id'] ?>" class="btn btn-success">Editar</a>
                                         <a href="usuario_view.php?id=<?=$usuario['id']?>" class="btn btn-secondary">Visualizar</a>
-                                        <form action="" method="POST" class="d-inline">
-                                            <button type="submit" name="delete_usuario" value="1" class="btn btn-danger btn-sm">Excluir</button>
+                                        <form action="acoes.php" method="POST" class="d-inline">
+                                            <button onclick="return confirm('Tem certeza que deseja excluir?')" type="submit" name="delete_usuario" value="<?= $usuario['id']?>" class="btn btn-danger btn-sm">Excluir</button>
                                         </form>
                                     </td>
                                 </tr>
