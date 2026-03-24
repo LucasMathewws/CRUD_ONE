@@ -1,3 +1,6 @@
+<?php
+require('conexao.php');
+?>
 <!doctype html>
 <html lang="pt-BR">
 
@@ -20,27 +23,42 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="acoes.php" method="POST">
-                            <div class="mb-3">
-                                <label>Nome</label>
-                                <input type="text" name="nome" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label>Idade</label>
-                                <input type="number" name="idade" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label>Email</label>
-                                <input type="text" name="email" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label>Senha</label>
-                                <input type="password" name="senha" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <button type="submit" name="create_usuario" class="btn btn-success">Confirmar</button>
-                            </div>
-                        </form>
+                        <?php
+                    if (isset($_GET['id'])){
+                        $usuario_id = mysqli_real_escape_string($conexao, $_GET['id']);
+                        $sql = "SELECT * FROM usuario WHERE id='$usuario_id'";
+                        $query = mysqli_query($conexao, $sql);
+
+                      if(mysqli_num_rows($query) > 0){
+                        $usuario = mysqli_fetch_array($query);
+                                          
+                        ?>
+                        <div class="mb-3">
+                            <label>Nome</label>
+                            <p class ="form-control">
+                                <?= $usuario['nome']; ?>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label>Idade</label>
+                            <p class ="form-control">
+                                <?= $usuario['idade']; ?>    
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <p class ="form-control">
+                                <?= $usuario['email']; ?>    
+                            </p>
+                        </div>
+                        <?php
+                        }
+                        else{
+                            echo "<h5>Usuário Não encontrado</h5>";
+                        }
+                    }  
+                          
+                        ?>
                     </div>
                 </div>
             </div>
